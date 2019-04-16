@@ -1,6 +1,6 @@
-__author__ = "xiaonan"
-
 """
+Author: Nan <xnone0104@gmail.com>
+
 https://projecteuler.net/problem=18
 """
 import numpy as np
