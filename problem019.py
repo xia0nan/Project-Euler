@@ -18,3 +18,21 @@ How many Sundays fell on the first of the month during the twentieth century (1 
 
 """
 
+from datetime import date, timedelta
+
+
+start_date = date(year=1901, month=1, day=1)
+end_date = date(year=2000, month=12, day=31)
+
+one_day = timedelta(days=1)
+
+current_day = start_date
+
+count_match = 0
+
+while current_day != end_date:
+	if current_day.day == 1 and current_day.weekday() == 6:
+		count_match += 1
+	current_day += one_day
+
+print(count_match)
