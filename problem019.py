@@ -36,3 +36,7 @@ while current_day != end_date:
 	current_day += one_day
 
 print(count_match)
+
+# Reference from discussion: https://projecteuler.net/thread=19;page=8
+import calendar
+print([calendar.weekday(y,m,1) for y in range(1901,2001) for m in range(1,13)].count(6))
