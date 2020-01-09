@@ -15,12 +15,11 @@ therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and 142; so d
 Evaluate the sum of all the amicable numbers under 10000.
 
 """
-import numpy as np
 
 def proper_divisors(num):
 	# return proper divisors of a number
 	result = list()
-	for i in range(1, int(np.sqrt(num))):
+	for i in range(1, int(num / 2) + 1):
 		if num % i == 0:
 			result.append(i)
 	return result
@@ -33,15 +32,20 @@ def d(number):
 def main():
 	bound = 10000
 	results = []
-	for a in range(5001):
+	for a in range(bound + 1):
 		b = d(a)
 		if (b != a) and (d(b) == a):
 			results.append(a)
 			results.append(b)
-	print(sum(results))
+	print(sum(results)//2)  # each pair shows up twice
+
+def test():
+	print(d(220))  # 284
+	print(d(284))  # 220
 
 if __name__ == '__main__':
 	main()
+	# test()
 
 		
 
