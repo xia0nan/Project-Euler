@@ -19,6 +19,7 @@ So, COLIN would obtain a score of 938 × 53 = 49714.
 What is the total of all the name scores in the file?
 """
 from pathlib import Path
+import unittest
 
 CURRENT_DIR = Path.cwd()
 DATA_DIR = CURRENT_DIR / "data"
@@ -46,6 +47,28 @@ def main():
     # Step 4: Output the total score
     print(f"Total name score: {total_score}")
 
-if __name__ == '__main__':
-    main()
+class TestNameScores(unittest.TestCase):
+    def test_colin_example(self):
+        """Test the COLIN example from the problem statement."""
+        # COLIN, worth 53 points, at position 938
+        self.assertEqual(get_name_score("COLIN", 938), 49714)
+    
+    def test_name_value_calculation(self):
+        """Test that the alphabetical value calculation works correctly."""
+        # A=1, B=2, C=3, so ABC should be worth 1+2+3=6
+        self.assertEqual(sum(ord(char) - ord('A') + 1 for char in "ABC"), 6)
+        # Z should be worth 26
+        self.assertEqual(sum(ord(char) - ord('A') + 1 for char in "Z"), 26)
+    
+    def test_simple_name_score(self):
+        """Test a simple name score calculation."""
+        # "ABCD" is worth 1+2+3+4=10, at position 5
+        self.assertEqual(get_name_score("ABCD", 5), 50)
 
+if __name__ == '__main__':
+    # Run tests if called with -t argument
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "-t":
+        unittest.main(argv=['first-arg-is-ignored'])
+    else:
+        main()
