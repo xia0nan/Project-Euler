@@ -22,13 +22,30 @@ from pathlib import Path
 
 CURRENT_DIR = Path.cwd()
 DATA_DIR = CURRENT_DIR / "data"
-
 filename = "names.txt"
 
+def get_name_score(name: str, position: int) -> int:
+    """Calculate the name score, given the name and its position in the list."""
+    name_value = sum(ord(char) - ord('A') + 1 for char in name)  # A=1, B=2, ..., Z=26
+    return name_value * position
+
 def main():
+    # Step 1: Load the names from the file
     with open(str(DATA_DIR / filename), 'r') as f:
-        names = f.read()
-    print(names)
+        names = f.read().strip().split(',')
+
+    # Step 2: Clean up the names and sort them
+    names = [name.strip('"') for name in names]
+    names.sort()
+
+    # Step 3: Calculate the total name score
+    total_score = 0
+    for index, name in enumerate(names, start=1):
+        total_score += get_name_score(name, index)
+
+    # Step 4: Output the total score
+    print(f"Total name score: {total_score}")
 
 if __name__ == '__main__':
     main()
+
