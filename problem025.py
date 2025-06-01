@@ -30,26 +30,26 @@ The 12th term, F₁₂, is the first term to contain three digits.
 What is the index of the first term in the Fibonacci sequence to contain 1000 digits?
 
 """
-def find_fibonacci_index(num_digits):
-    """
-    Find the index of the first Fibonacci number with the specified number of digits.
-    
-    Args:
-        num_digits: The number of digits to look for
-        
-    Returns:
-        The index of the first Fibonacci number with num_digits digits
-    """
-    # Initialize the first two Fibonacci numbers
-    a, b = 1, 1
-    index = 2  # We start with F₂
-    
-    # Continue generating Fibonacci numbers until we find one with the desired number of digits
-    while len(str(b)) < num_digits:
-        a, b = b, a + b
-        index += 1
-    
-    return index
 
-result = find_fibonacci_index(1000)
-print(f"The index of the first term in the Fibonacci sequence to contain 1000 digits is {result}")
+from decimal import Decimal, getcontext
+
+def fibonacci_index_with_digits_precise(digits):
+    # Set precision high enough to handle large digit calculations
+    getcontext().prec = 100  # 100 digits of precision is enough for 10000-digit Fibonacci
+
+    sqrt_5 = Decimal(5).sqrt()
+    phi = (Decimal(1) + sqrt_5) / 2
+
+    log_phi = phi.ln() / Decimal(10).ln()  # log10(phi)
+    log_sqrt_5 = (sqrt_5.ln() / Decimal(10).ln())  # log10(sqrt(5))
+
+    index = (Decimal(digits) - 1 + log_sqrt_5) / log_phi
+    return int(index.to_integral_value(rounding='ROUND_CEILING'))
+
+# Example: 1000-digit Fibonacci number
+print("The index of the first term in the Fibonacci sequence to contain 1000 digits is", 
+      fibonacci_index_with_digits_precise(1000))
+
+# Example: 10000-digit Fibonacci number
+print("The index of the first term in the Fibonacci sequence to contain 10000 digits is",
+      fibonacci_index_with_digits_precise(10000))
